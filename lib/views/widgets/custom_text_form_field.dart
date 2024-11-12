@@ -3,22 +3,31 @@ import 'package:notes_app_2/constants.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField(
-      {super.key, required this.label, this.maxLines = 1});
+      {super.key, required this.label, this.maxLines = 1, this.onSaved});
   final String label;
   final int maxLines;
+  final void Function(String?)? onSaved;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onSaved: onSaved,
+      validator: (value) {
+        if (value?.isEmpty ?? true) {
+          return 'Field Is Required';
+        } else {
+          return null;
+        }
+      },
       maxLines: maxLines,
-      cursorColor: KPrimaryColor,
+      cursorColor: kPrimaryColor,
       decoration: InputDecoration(
         label: Text(
           label,
-          style: const TextStyle(color: KPrimaryColor),
+          style: const TextStyle(color: kPrimaryColor),
         ),
         border: buildBorder(),
         enabledBorder: buildBorder(),
-        focusedBorder: buildBorder(KPrimaryColor),
+        focusedBorder: buildBorder(kPrimaryColor),
       ),
     );
   }
